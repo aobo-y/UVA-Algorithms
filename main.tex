@@ -298,7 +298,7 @@ $$
 where $c_1, c_2, c_3, d$ vary with different implementations.
 
 \paragraph{}
-Therefore, in practice, $k$ should be decided with the value of $n$ and the actual implementations.
+Therefore, in practice, $k$ should be decided after analyzing and trying the actual implementation with different values of $n$.
 
 
 \newpage
@@ -313,7 +313,7 @@ Suppose we are given $n$ numbers $\vec{a}=(a_1,\dots,a_n)$ as input. As output, 
 Build a min-heap as a min-priority queue with the given elements. Then keep extracting the minimum element from the heap $m$ times. The elements extracted are $(b_1,\dots,b_m)$.
 
 \paragraph{}
-According to the book, the running time of Build-Min-Heap is $O(n)$ and Heap-Extract-Min is $O(\log n)$, so when $m=n/\log n$. Therefore, the algorithm's running time is
+According to the book, the running time of Build-Min-Heap is $O(n)$ and Heap-Extract-Min is $O(\log n)$. Therefore, when $m=n/\log n$, the algorithm's running time is
 
 $$\begin{aligned}
 O(n)+mO(\log n)&=O(n)+\frac{n}{\log n}O(\log n)\\
