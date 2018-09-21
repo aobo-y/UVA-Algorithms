@@ -1,0 +1,324 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsfonts,amsthm,amsmath,amssymb}
+\usepackage{array}
+\usepackage{epsfig}
+\usepackage{fullpage}
+\usepackage{mathtools}
+\usepackage{hyperref}
+
+
+\input{macros.tex}
+
+\title{Design and Analysis of Algorithms\\ {\bf Problem Set 2 (1st graded set)}}
+\author{}
+%\date{}
+
+\usepackage{fullpage}
+
+\begin{document}
+
+\maketitle
+
+\begin{quote}
+    Write your name and computing ID here: ay6gv
+\end{quote}
+
+\vspace{20px}
+
+\begin{quote}
+    Write your collaborators' computing ID here:
+\end{quote}
+
+\vspace{20px}
+
+\begin{quote}
+    Here write the pledge that you did not share any written material electronically or differently:
+\end{quote}
+
+\newpage
+\paragraph{Problem 1:} For any pair of functions $f,g$ from the following set of functions, say whether it holds that $f=O(g), f=\Omega(g), f=o(g), f=\omega(g) $ or $f=\Theta(g)$. If multiple relations between $f$ and $g$ hold, state the stronger one. For example if $f=o(g)$ and also $f=O(g)$, then only say $f=o(g)$, or alternatively $g=\omega(f)$.  The set of functions are $S= \{h,k,m\}$ where $h(n)=\sqrt{n}+\log n$, $k(n) = 2^n/n^9$, $m(n) = (\log n)^9 + n^{1/2}$. Give a short argument for each of your answers.
+
+
+\paragraph{Answer:}
+% Add your answer for problem 1 here:
+
+$$h = \Theta(m), m = o(k), h = o(k)$$
+
+For $h$,
+
+$$\begin{aligned}
+h(n)&=\sqrt{n}+\log n\\
+&=n^{1/2}+\log n\\
+\end{aligned}$$
+
+To find $c_1, c_2, n_0$, so that for all $n>n_0$
+
+$$\begin{aligned}
+0 \le c_1n^{1/2} \le n^{1/2}+\log n \le c2n^{1/2}\\
+0 \le c_1 \le 1+\frac{\log n}{n^{1/2}} \le c2
+\end{aligned}$$
+
+
+According to the book, any positive polynomial function grows faster than any polylogarithmic function, so
+
+$$\begin{aligned}
+\lim\limits_{n\rightarrow\infty}\frac{\log n}{n^{1/2}}=0
+\end{aligned}$$
+
+So for $x \ge 4$
+
+$$\begin{aligned}
+0 \le \frac{\log n}{n^{1/2}} \le 1\\
+1 \le 1+\frac{\log n}{n^{1/2}} \le 2
+\end{aligned}$$
+
+Choosing $c_1=1, c_2=2, x_0=4$ could hold the above inequality, so
+
+$$\begin{aligned}
+h(n)=\Theta(n^{1/2})
+\end{aligned}$$
+
+For $m$,
+
+$$\begin{aligned}
+m(n)&=(\log n)^9+n^{1/2}\\
+\end{aligned}$$
+
+To find $c_1, c_2, n_0$, so that for all $n>n_0$
+
+$$\begin{aligned}
+0 \le c_1n^{1/2} \le n^{1/2}+(\log n)^9 \le c2n^{1/2}\\
+0 \le c_1 \le 1+\frac{(\log n)^9}{n^{1/2}} \le c2
+\end{aligned}$$
+
+
+According to the book, any positive polynomial function grows faster than any polylogarithmic function, so
+
+$$\begin{aligned}
+\lim\limits_{n\rightarrow\infty}\frac{(\log n)^9}{n^{1/2}}=0
+\end{aligned}$$
+
+So for $x \ge 2^{1024}$
+
+$$\begin{aligned}
+0 \le \frac{(\log n)^9}{n^{1/2}} \le 1\\
+1 \le 1+\frac{(\log n)^9}{n^{1/2}} \le 2
+\end{aligned}$$
+
+Choosing $c_1=1, c_2=2, x_0=2^{1024}$ could hold the above inequality, so
+
+$$\begin{aligned}
+m(n)=\Theta(n^{1/2})
+\end{aligned}$$
+
+So according to the Transitivity and Symmetry of the asymptotic comparisons
+
+$$ h = \Theta(m),\space m = \Theta(h) $$
+
+For $k$,
+
+$$\begin{aligned}
+\lim\limits_{n\rightarrow\infty}\frac{n^{1/2}}{k(n)}&=\lim\limits_{n\rightarrow\infty}\frac{n^{1/2}}{2^n/n^9}\\
+&=\lim\limits_{n\rightarrow\infty}\frac{n^{19/2}}{2^n}\\
+&=0
+\end{aligned}$$
+
+So
+
+$$ n^{1/2}=o(k(n)) $$
+
+According to the Reflexivity of the asymptotic comparisons
+
+$$ n^{1/2}=\Theta(n^{1/2})=o(k(n)) $$
+$$ h=o(k), \space m=o(k) $$
+
+\newpage
+\paragraph{Problem 2:} 
+In the algorithm Merge Sort: (a) How many times the subroutine Merge is called? (b) How many times the Merge-Sort subroutine itself is called? Give a tight analysis (using $\Theta$ notation) based on the input size $n$. Prove the correctness of your answer. For this, you can assume for simplicity that $n$ is a power of two.
+
+
+
+\paragraph{Answer:}
+% Add your answer for problem 2 here:
+
+Both are called $\Theta(n)$
+
+Define Merge-Sort subroutine as $S$ and Merge subroutine is $M$. Let $C(x)$ be the number of times $x$ is called. For Merge-Sort, we have
+
+$$\begin{aligned}
+S(n)&=2S(n/2)+M(n) \space\implies\space C(S)=2, C(M)=1\\
+2S(n/2)&=2^2S(n/4)+2M(n/2) \space\implies\space C(S)=2^2, C(M)=2\\
+2^2S(n/4)&=2^3S(n/8)+2^2M(n/4) \space\implies\space C(S)=2^3, C(M)=2^2\\
+&\vdots\\
+2^{{\log n}-1}S(2)&=2^{\log n}S(1)+2^{{\log n}-1}M(2) \space\implies\space C(S)=2^{\log n}, C(M)=2^{{\log n}-1}
+\end{aligned}$$
+
+So add the count $C(S)$ and $C(M)$ of each step together. (For $C(S)$, we can also add an extra $1$ for the initial call of Merge-Sort $S(n)$, but it doesn't impact the result)
+
+$$\begin{aligned}
+C(S)&=2+2^2+2^3+\dots+2^{\log n}\\
+&=\frac{2(1-2^{\log n})}{1-2}\\
+&=2n-2\\
+&=\Theta(n)\\
+\end{aligned}$$
+
+$$\begin{aligned}
+C(M)&=1+2+2^2+\dots+2^{{\log n}-1}\\
+&=\frac{1-2^{\log n}}{1-2}\\
+&=n-1\\
+&=\Theta(n)
+\end{aligned}$$
+
+
+
+\newpage
+\paragraph{Problem 3:} 
+Suppose $A$ is a recursive algorithm that works as follows. Given an input $(a_1,\dots,a_n)$ of size $n$, $A$ partitions its input into four, almost equally sized parts $P_1,P_2,P_3,P_4$, each of which of size $P_i \in [n/4 \pm 1]$, and $|P_1|+|P_2|+|P_3|+|P_4| = n$. $A$ then recursively solves 4 problems over the following instances: $P_1 \cup P_2$, $P_2 \cup P_3$, $P_3 \cup P_4$, $P_4 \cup P_1$. Before calling these subroutines, $A$ spends $n^2$ time to pre-process these inputs (e.g., prepare the actual sets $P_1,\dots,P_4$) and after getting the answers to the 4 recursive calls, $A$ spends time $S(n)$ to put the answers together and find the final solution. Now, what is the total running time of $A$ in each of the cases below:
+\begin{enumerate}
+    \item $S(n) = n^2/ \log n$.
+    \item $S(n) = n^2$.
+    \item $S(n) = n^2 \cdot \log n$.
+\end{enumerate}
+If you can solve the problem using the master theorem, do so and explain how you do it. But if it cannot be applied, state why (in which case you don't need to solve that part, and your explanation as to why applying master theorem is not possible is enough).
+
+
+
+\paragraph{Answer:}
+% Add your answer for problem 3 here:
+
+$$
+A(n)=4A(n/2)+n^2+S(n)
+$$
+
+1. with $S(n)=n^2/\log n$
+
+$$\begin{aligned}
+A(n)&=4A(n/2)+n^2+n^2/\log n\\
+\end{aligned}$$
+
+Assume positive constants $c_1, c_2, n_0$ exist, so that for all $n \ge n_0$
+
+$$\begin{aligned}
+0 \le c_1n^2 \le n^2+n^2/\log n \le c_2n^2\\
+0 \le c_1 \le 1+1/\log n \le c_2\\
+\end{aligned}$$
+
+For $n \ge 2$
+
+$$1 \le 1+1/\log n\le2$$
+
+Choosing $c_1=1, c_2=2, n_0=2$, we can prove the assumed inequality valid. So
+
+$$
+n^2+n^2/\log n=\Theta(n^2)
+$$
+
+According to The master theorem
+
+$$\begin{aligned}
+a=4&, b=2\\
+n^{\log_b a}&=n^{\log_2 4}\\
+&=n^2\\
+\end{aligned}$$
+$$
+f(n)=n^2+n^2/\log n=\Theta(n^2)
+$$
+$$
+A(n)=\Theta(n^2\lg n)
+$$
+
+2. with $S(n)=n^2$
+
+
+$$\begin{aligned}
+A(n)&=4A(n/2)+n^2+n^2\\
+&=4A(n/2)+2n^2
+\end{aligned}$$
+
+According to The master theorem
+
+$$\begin{aligned}
+n^{\log_b a}&=n^2\\
+f(n)=2n^2&=\Theta(n^2)
+\end{aligned}$$
+$$
+A(n)=\Theta(n^2\lg n)
+$$
+
+3. with $S(n)=n^2\log n$
+
+$$\begin{aligned}
+A(n)&=4A(n/2)+n^2+n^2\log n\\
+\end{aligned}$$
+
+$$\begin{aligned}
+f(n)&=n^2+n^2\log n\\
+\frac{f(n)}{n^{\log_b a}}&=\frac{n^2+n^2\log n}{n^2}\\
+&=\log n+1
+\end{aligned}$$
+
+The difference is clearly not polynomial. $\log n$ is asymptotically less than $n^\epsilon$ for any positive constant $\epsilon$.
+
+So the master theorem does not apply to this recurrence.
+
+
+
+\newpage
+\paragraph{Problem 4:} 
+Problem 7.4-5 from the (last edition of the) CLRS book. Namely the following. We can improve the (expected) running time of quick-sort in practice by taking advantage of the fast running time of insertion sort when its input is “nearly” sorted. Upon calling quick-sort on a subarray with fewer than k elements, let it simply return without
+sorting the sub-array. After the top-level call to quick-sort returns, run insertion sort on the entire array to finish the sorting process. Argue that this sorting algorithm runs in $O(nk + n \log (n/k))$ expected time. How should we pick $k$, both in theory and in practice?
+
+
+\paragraph{Answer:}
+% Add your answer for problem 4 here:
+
+
+\paragraph{}
+To produce subarray with fewer than $k$ elements with quicksort, the recursion depth of dividing $n$ elements  is $O(\log (n/k))$. The cost of each leave is $O(n)$. So the quick sort part costs $O(n\log (n/k))$. Then the insertion-sort part requires to loop $n$ elements, but each would only require at most $k$ comparison, so the cost is $O(nk)$. In total, this sorting algorithm runs in $O(nk+n\log (n/k))$
+
+\paragraph{}
+In theory, this algorithm should be no worse than quicksort, which means
+
+$$\begin{aligned}
+nk+n\log (n/k)&=O(n\log n)\\
+nk-n\log k+n\log n&=O(n\log n)\\
+\end{aligned}$$
+
+It's obvious no matter how we choose $k$, the algorithm can never be better than $n\log n$. The best is to have the same performance. As long as we choose $k=O(\log n)$, we can hold $O(nk+n\log (n/k))=O(n\log n)$.
+
+\paragraph{}
+In practice, it's more complicated. $k$ should be highly depend on the actual value of $n$ and the implementation. The asymptotic notation abstracts away many details of the algorithms, which will surely impact the actual performance. For example, the total cost of quick-sort $O(n\log n)$ could be
+
+$$
+O(n\log n)=c_1n\log n+c_2n+c_3\log n+d
+$$
+
+where $c_1, c_2, c_3, d$ vary with different implementations.
+
+\paragraph{}
+Therefore, in practice, $k$ should be decided with the value of $n$ and the actual implementations.
+
+
+\newpage
+\paragraph{Problem 5:} 
+Suppose we are given $n$ numbers $\vec{a}=(a_1,\dots,a_n)$ as input. As output, we want to find out the $m$ smallest elements of $\vec{a}$, namely we want to find $(b_1,\dots,b_m)$ where these conditions hold:  $b_1\leq b_2 \leq \dots \leq b_m$, and that for any $a_i$ not listed in $(b_1,\dots,b_m)$ we have $b_m \leq a_i.$ Give an algorithm that solves this problem for $m=n / \log n$ in linear (i.e., $O(n)$) time. This is worst case time. Describe your algorithm in sufficient details so that it can be easily implemented. Analyze your algorithm carefully and show that it does indeed run in this much time. You can indeed rely on material we covered in class (or from the book) but you need to cite exactly what you are using. As an example, if the original list was $n=1000$ elements, and letting $\log n = 10$ we want the smallest 100 elements from the given list (in sorted way); but of course we want to solve this problem for an arbitrary $n$.
+
+
+\paragraph{Answer:}
+% Add your answer for problem 5 here:
+
+\paragraph{}
+Build a max-heap as a max-priority queue with the given elements. Then keep extract the max $m$ elements from the heap.
+
+\paragraph{}
+According to the book, the running time of Build-Max-Heap is $O(n)$ and Heap-Extract-Max is $O(\log n)$, so when $m=n/\log n$. Therefore, the algorithm's running time is
+
+$$\begin{aligned}
+O(n)+mO(\log n)&=O(n)+\frac{n}{\log n}O(\log n)\\
+&=O(n)+O(n)\\
+&=O(n)
+\end{aligned}$$
+
+\end{document}
