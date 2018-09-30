@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+
+\usepackage{amsfonts,amsthm,amsmath,amssymb}
+\usepackage{array}
+\usepackage{epsfig}
+\usepackage{fullpage}
+\usepackage{mathtools}
+\usepackage{hyperref}
+
+
+\input{macros.tex}
+
+\title{Design and Analysis of Algorithms\\ {\bf Problem Set 4 (2st graded set)}}
+\author{}
+%\date{}
+
+\usepackage{fullpage}
+
+\begin{document}
+
+\maketitle
+
+\begin{quote}
+    Write your name and computing ID here:
+\end{quote}
+
+\vspace{20px}
+
+\begin{quote}
+    Write your collaborators' computing ID here:
+\end{quote}
+
+\vspace{20px}
+
+\begin{quote}
+    Here write the pledge that you did not share any written material electronically or differently:
+\end{quote}
+
+\newpage
+\paragraph{Problem 1:} In class, we proved that the height of every red-black tree is at most $O(\log n)$. 
+
+\begin{enumerate}[label=\alph*]
+\item Where in that proof did we use property 5 of red-black trees? Briefly discuss that part of the proof just to convince the reader of the fact that you know how property 5 is playing a role there! 
+
+\item Show that if we remove property 5, the depths of red-black trees are no longer necessarily logarithmic.
+\end{enumerate}
+
+\paragraph{Answer:}
+% Add your answer for problem 1 here:
+
+
+\newpage
+\paragraph{Problem 2:} 
+In class, we discussed the notion of universal hash functions. It was a \emph{family} $H$ of hash functions, and during the algorithm we will pick one from it. Suppose the universe of keys is $\set{0,\dots,100}$. 
+
+\begin{enumerate}[label=\alph*]
+\item If we want to use the specific family of hash functions that in class we proved to be Universal, what is the smallest value of prime $p$ that we can use for this size of universe of keys?
+
+\item Suppose the space of keys is all the nonnegative integer numbers up to $2^{100}-1$. (Note that writing down any of these numbers needs at most $100$ bits). Suppose we will not store all these numbers at the same time, but rather we will have a small set of size at most $1000$ numbers. For this problem, how big will you use the size of the array $T$ of the linked hashes?
+
+\item For the setting of the problem in part (b), if we want to construct a family of universal hash functions, as we did in class, argue that the family will have more than $2^{200}$ hash functions in it. (Hint, we need to pick a prime that is bigger than $2^{100}-1$, and $2^{100}$ is not a prime!).
+
+\item Explain briefly: how can we manage to work with such a huge family of hash functions while we cannot even write down the description of all such hash functions? (Hint, argue why we don't need to write down the description of those hash functions, and we can still use this family as we want.)
+\end{enumerate}
+
+\paragraph{Answer:}
+% Add your answer for problem 2 here:
+
+\newpage
+\paragraph{Answer for problem 2 (if continued):}
+
+
+\newpage
+\paragraph{Problem 3:} 
+For non-negative integers $m\leq n$, ${n \choose m}$ denotes the number of ways that we can choose $m$ objects from $\set{1,\dots,n}$ while the order of selection does not matter. For example ${n \choose 2} = \frac{n (n-1)}{2}$.
+Pascal has a recursive relation for finding the values of ${n \choose m}$ as follows.
+\begin{itemize}
+    \item If $m > n$, then ${n \choose m}=0$.
+    \item If $m =n$ or $m=0$, then ${n \choose m}=1$.
+    \item Otherwise, ${n \choose m} = {n-1 \choose m} + {n-1 \choose m-1}$.
+\end{itemize}
+
+
+\begin{enumerate}[label=\alph*]
+\item Argue very briefly, why Pascal's recursive relation is correct.
+\item Write a (naiive) recursive program based on Pascal's recursive relation that computes the number.
+\item Analyze the running time of your recursive implementation.
+\item How long does the recursive program take to compute ${n \choose n/2}$? Is it a polynomial time over $n$? Hint, you can use the inequality $(\frac{n}{k})^k \leq {n \choose k}$ (No need to write a proof for the hint, but try to prove it yourself).
+\item Write a bottom-up dynamic programming version of the same recursive algorithm.
+\item What is the running time of the programs you wrote in previous 2 steps? (Based on $m,n$.)
+\end{enumerate}
+
+
+\paragraph{Answer:}
+% Add your answer for problem 3 here:
+
+
+
+
+\newpage
+\paragraph{Answer for problem 3 (if continued):}
+
+\end{document}
