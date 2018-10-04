@@ -23,7 +23,7 @@
 \maketitle
 
 \begin{quote}
-    Write your name and computing ID here:
+    Write your name and computing ID here: Aobo Yang (ay6gv)
 \end{quote}
 
 \vspace{20px}
@@ -35,25 +35,38 @@
 \vspace{20px}
 
 \begin{quote}
-    Here write the pledge that you did not share any written material electronically or differently:
+    Here write the pledge that you did not share any written material electronically or differently: I have neither given nor received aid on this assignment.
 \end{quote}
 
 \newpage
-\paragraph{Problem 1:} In class, we proved that the height of every red-black tree is at most $O(\log n)$. 
+\paragraph{Problem 1:} In class, we proved that the height of every red-black tree is at most $O(\log n)$.
 
 \begin{enumerate}[label=\alph*]
-\item Where in that proof did we use property 5 of red-black trees? Briefly discuss that part of the proof just to convince the reader of the fact that you know how property 5 is playing a role there! 
+\item Where in that proof did we use property 5 of red-black trees? Briefly discuss that part of the proof just to convince the reader of the fact that you know how property 5 is playing a role there!
 
 \item Show that if we remove property 5, the depths of red-black trees are no longer necessarily logarithmic.
 \end{enumerate}
 
 \paragraph{Answer:}
 % Add your answer for problem 1 here:
+\paragraph{}
+a
+
+Property 5 is used in the proof of the claim that the subtree at any node $x$ contains at least $2^{bh(x)}-1$ internal nodes. Here uses the definition of black-height, $bh(x)$, which means the number of black nodes on any simple path from a node $x$ but not including down to a leaf. This definition is built on Property 5 so that all descending simple paths from the node have the same number of black nodes. Without Property 5, the black-height of a node loses its meaning, because the number of top-down black nodes depends on which path we count. $bh(x)$ becomes a range of possible number instead of a constant. Furthermore, in the later induction proof of this claim, the conclusion that each child of node $x$ has a black-height of either $bh(x)$ or $bh(x)-1$ also relies on the same number of black nodes on each path. Therefore, this claim and its proof are based on Property 5.
+
+\paragraph{}
+b
+
+For example, without Property 5, $n$ nodes can form a linear chain-like tree. In details, each node acts as the left child of another node and the right child of each node is $NIL$. All the nodes' color are black. Such tree can satisfy all the 4 other properties of red-black tree but the depths is $O(n)$ instead of $O(\log n)$.
+
+
+
+
 
 
 \newpage
-\paragraph{Problem 2:} 
-In class, we discussed the notion of universal hash functions. It was a \emph{family} $H$ of hash functions, and during the algorithm we will pick one from it. Suppose the universe of keys is $\set{0,\dots,100}$. 
+\paragraph{Problem 2:}
+In class, we discussed the notion of universal hash functions. It was a \emph{family} $H$ of hash functions, and during the algorithm we will pick one from it. Suppose the universe of keys is $\set{0,\dots,100}$.
 
 \begin{enumerate}[label=\alph*]
 \item If we want to use the specific family of hash functions that in class we proved to be Universal, what is the smallest value of prime $p$ that we can use for this size of universe of keys?
@@ -67,13 +80,81 @@ In class, we discussed the notion of universal hash functions. It was a \emph{fa
 
 \paragraph{Answer:}
 % Add your answer for problem 2 here:
+\paragraph{}
+a
 
+The smallest value is $101$, since the prime number $p$ needs ensure $p>k$, for all $k$ in the universe of keys.
+
+\paragraph{}
+b
+
+I will use an array with size of $1000$. According to the Corollary 11.4 in the book, for an empty table with $m$ slot, it takes expected time $\Theta(n)$ to handle any sequence of $n$ INSERT, SEARCH, and DELETE operations containing $O(m)$ INSERT operations. Since the hash table needs to hold $1000$ numbers, we need $1000$ slots so that the hash table can handle these operations in linear time.
+
+\paragraph{}
+c
+
+The hash function is
+
+$$
+h_{ab}(k)=((ak+b) \; mod \; p) \; mod \;m
+$$
+
+where $p$ is a prime number $p$ with $p>k$ for every possible key $k$.
+
+The family of all such function can be represented as
+$$
+H_{pm}=\{ h_{ab} : a \in \mathbb{Z}^{*}_p ~ and ~ b \in \mathbb{Z}_p \}
+$$
+
+where
+$$
+\mathbb{Z}^{*}_p = \{1,2,\dots,p-1\}
+$$
+$$
+\mathbb{Z}_p = \{0,1,\dots,p-1\}
+$$
+
+so
+
+$$
+|\mathbb{Z}^{*}_p| = p - 1
+$$
+$$
+|\mathbb{Z}_p| = p
+$$
+
+Based on part (b), for every possible key $k$, we have
+
+$$
+k \leq 2^{100}-1
+$$
+
+while $2^{100}$ is not a prime number, so
+
+$$
+p >= 2^{100} + 1
+$$
 \newpage
 \paragraph{Answer for problem 2 (if continued):}
 
 
+\paragraph{}
+Therefore,
+
+$$\begin{aligned}
+|H_{pm}| &= |\mathbb{Z}^{*}_p| * |\mathbb{Z}_p|\\
+&=(p-1)p\\
+&=2^{100}(2^{100}+1)\\
+&>2^{200}
+\end{aligned}$$
+
+\paragraph{}
+d
+
+Because everytime when we need to choose a hash function, we only need to base on a large enough prime number to randomly generate the $2$ variables within the range: $a$ and $b$. Any such qualified pairs can produce a hash function of the family. Therefore, we don't need to write down the descriptions for all the family.
+
 \newpage
-\paragraph{Problem 3:} 
+\paragraph{Problem 3:}
 For non-negative integers $m\leq n$, ${n \choose m}$ denotes the number of ways that we can choose $m$ objects from $\set{1,\dots,n}$ while the order of selection does not matter. For example ${n \choose 2} = \frac{n (n-1)}{2}$.
 Pascal has a recursive relation for finding the values of ${n \choose m}$ as follows.
 \begin{itemize}
@@ -95,8 +176,43 @@ Pascal has a recursive relation for finding the values of ${n \choose m}$ as fol
 
 \paragraph{Answer:}
 % Add your answer for problem 3 here:
+\paragraph{}
+a
 
+If $m>n$, there is no way we can choose $m$ objects only from $n$ projects, so ${n \choose m}=0$
 
+If $m=n$, there is only one way to choose all objects, so ${n \choose m}=0$
+
+If $m=0$, there is only one way to choose no objects, so ${n \choose m}=0$
+
+Otherwise,
+
+$$\begin{aligned}
+{n-1 \choose m} + {n-1 \choose m-1} &= \frac{(n-1)(n-2)\dots(n-m)}{m(m-1)\dots2} + \frac{(n-1)(n-2)\dots(n-m+1)}{(m-1)(m-2)\dots2}\\
+&=\frac{(n-1)(n-2)\dots(n-m+1)(n-m)}{m(m-1)\dots2} + \frac{m(n-1)(n-2)\dots(n-m+1)}{m(m-1)(m-2)\dots2}\\
+&=\frac{(n-1)(n-2)\dots(n-m+1)(n-m+m)}{m(m-1)\dots2}\\
+&=\frac{n(n-1)(n-2)\dots(n-m+1)}{m(m-1)\dots2}\\
+&={n \choose m}
+\end{aligned}$$
+
+So Pascal's recursive relation is correct.
+
+\paragraph{}
+
+b
+
+\begin{verbatim}
+    function pascalRec(n, m) {
+        if (m > n) return 0;
+        if (m == n || m == 0) return 1;
+
+        return pascalRec(n-1, m) + pascalRec(n-1, m-1);
+    }
+\end{verbatim}
+
+\paragraph{}
+
+c
 
 
 \newpage
