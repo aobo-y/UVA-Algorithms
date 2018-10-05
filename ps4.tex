@@ -202,20 +202,61 @@ So Pascal's recursive relation is correct.
 b
 
 \begin{verbatim}
-    function pascalRec(n, m) {
+    function combination(n, m) {
         if (m > n) return 0;
         if (m == n || m == 0) return 1;
 
-        return pascalRec(n-1, m) + pascalRec(n-1, m-1);
+        return combination(n-1, m) + combination(n-1, m-1);
     }
 \end{verbatim}
-
-\paragraph{}
-
-c
 
 
 \newpage
 \paragraph{Answer for problem 3 (if continued):}
 
+\paragraph{}
+
+c
+
+With the implementation of the above the code, by using $c$ to represent the function, each function call can be expanded as
+
+$$
+    c(n, m) = c(n-1, m) + c(n-1, m-1)
+$$
+
+Also from the code, we know the function will not stop the recusive calling  until $n = m$ or $m = 0$ (we don't need to consider $m > n$ as long as the initial $m < n$). The function calls with such inputs return a numeric result like the building units to form the total result. Therefore, if we expand the initial $c(n, m)$ recursively, it must end with these unit calls:
+
+$$
+    c(n, m) = c(m, m) + c(m-1, m-1) + c(m, 0) + c(1, 0) + (2, 2) + (1, 1) + \dots
+$$
+
+Since these units can only return $1$, and given $n$ and $m$, we already know the result is ${n \choose m}$, there must be ${n \choose m}$ unit calls to produce enough $1$.
+
+$$
+{n \choose m} = \underbrace{1+1+1\dots}_{n \choose m}
+$$
+
+Furthermore, since each function call can only add $2$ returns, there are at least another ${n \choose m}-1$ function calls to add them together. Each add takes $\Theta(1)$
+
+Therefore, we can conclude the running time is $\Omega({n \choose m})$
+
+
+\paragraph{}
+
+d
+
+With $(\frac{n}{k})^k \le {n \choose m}$,
+
+$$\begin{aligned}
+{n \choose n/2} &\ge (\frac{n}{n/2})^{n/2}=2^{n/2}
+\end{aligned}$$
+
+So
+$$
+T({n \choose n/2}) = \Omega(2^{n/2})
+$$
+
+It's not polynomial over $n$
+
 \end{document}
+
