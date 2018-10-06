@@ -258,5 +258,40 @@ $$
 
 It's not polynomial over $n$
 
+
+\paragraph{}
+
+e
+
+\begin{verbatim}
+    function combination(n, m) {
+        let memoize be a 2-dimention array;
+        for (i = 1 to n) {
+            for (j = max(0, m - n + i) to min(i, m)) {
+                if (j == 0 || i == j) {
+                    memoize[i][j] = 1;
+                } else {
+                    memoize[i][j] = memoize[i - 1][j] + memoize[i - 1][j - 1];
+                }
+            }
+        }
+        return memoize[n][m];
+    }
+\end{verbatim}
+
+
+\paragraph{}
+
+f
+
+The above program contains 2 nested loops. The outter loop run $n$ times. For each outter iteration, the length of inner loop varies, but the longest possible range of inner loop is from $0$ to $m$. The operation inside the loop takes $\Theta(1)$. So
+
+$$\begin{aligned}
+    T(n, m) &\le n * (m + 1)\\
+    T(n, m) &= O(nm)
+\end{aligned}$$
+
+
+
 \end{document}
 
