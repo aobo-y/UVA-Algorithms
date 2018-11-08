@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+
+\usepackage{amsfonts,amsthm,amsmath,amssymb}
+\usepackage{array}
+\usepackage{epsfig}
+\usepackage{fullpage}
+\usepackage{mathtools}
+\usepackage{hyperref}
+
+
+\input{macros.tex}
+
+\title{Design and Analysis of Algorithms\\ {\bf 3rd (and last) Graded Problem Set -- 15\% of grade}}
+\author{}
+\date{November 1}
+
+\usepackage{fullpage}
+
+\begin{document}
+
+\maketitle
+
+\begin{quote}
+    Write your name and computing ID here:
+\end{quote}
+
+\vspace{20px}
+
+\begin{quote}
+    Write your collaborators' computing ID here:
+\end{quote}
+
+\vspace{20px}
+
+\begin{quote}
+    Here write the pledge that you did not share any written material electronically or differently:
+\end{quote}
+
+\newpage
+\paragraph{Problem 1:} Suppose we are given a flow network $G=(V,E)$ and capacity function $c$ defined over the (directed) edges. But suppose we also have a \emph{minimum} flow required on some edges, and that is defined by a given a function $d$ similar to $c$, and for every flow going from $u$ to $v$ we require $d(u,v) \leq f(u,v) \leq c(u,v)$. The goal is to compute the maximum flow.
+
+\begin{enumerate}[label=\alph*]
+\item If we want to use the FF algorithm to solve this generalization of max flow problem, what is the obstacle? Namely, what part of the FF algorithm does not work anymore?
+\item How can we solve this problem using the more advanced tools that we learned this week? :)
+\end{enumerate}
+\paragraph{Answer:}
+% Add your answer for problem 1 here:
+
+
+\newpage
+\paragraph{Problem 2:} (Part (a) is problem 26.1-7 from CLRS)
+
+Part (a) Suppose that, in addition to edge capacities, a flow network has vertex capacities.
+That is each vertex $v$ has a limit $l(v)$ on how much flow can pass though $v$. Show
+how to transform a flow network $G=(V,E)$ with vertex capacities into an equivalent
+flow network $G'=(V',E')$ without vertex capacities, such that a maximum flow in $G'$ has the same value as a maximum flow in $G$. While you are describing $G'$, also answer: how many vertices and edges does $G'$ have?
+
+Part (b) Use Part (a) to design an algorithm for the following problem based on maximum flow: Find the maximum number of vertex disjoint paths from a source $s$ to a sink $t$. Explain the details of how you use maximum flow exactly (but you can use maximum flow as a black-box.).
+\paragraph{Answer:}
+% Add your answer for problem 2 here:
+
+
+\newpage
+\paragraph{Problem 3:} 
+Let $G=(V,E)$ be a weighted directed graph with weight function $w(u,v), u,v \in V$, and let $s,t$ be two vertices of this graph. Consider the following linear program.
+\begin{itemize}
+    \item Variables: For each vertex $u \in V$, $\delta_u$ is a real valued variable.
+    \item Constraints: $\delta_s=0$, and for each edge $(u,v) \in E$, $\delta_v \leq \delta_u + w(u,v)$.
+    \item Objective function: \emph{maximize} $\delta_t$.
+\end{itemize}
+Prove that the maximum of $\delta_t$ (i.e., the optimal value) will be equal to the shortest path from $s$ to $t.$
+
+\newpage
+\paragraph{Problem 4:} 
+In class we saw the definition of an augmenting path in a residual network of a flow inside a flow network. The residual capacity of an augmenting path (as we saw and could be found in the book) is simply the minimum residual capacity of all the edges along this path (along the direction of the path -- note that there are edges going backwards as well which we ignore here). Design an algorithm of run time $O(n^2)$ (where $n$ is the number of vertices of the graph) to find a path with \emph{maximum} residual capacity. In other words, you can ignore the context here and simply solve the following problem. We are given a weighted graph that is directed, and we want to find a path $P$ from $s$ to $t$ that \emph{maximizes} the \emph{minimum} edge on the path. Hint: try to use the high level ideas of Dijkstra's algorithm.
+
+
+\end{document}
