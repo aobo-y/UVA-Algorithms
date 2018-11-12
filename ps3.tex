@@ -23,7 +23,7 @@
 \maketitle
 
 \begin{quote}
-    Write your name and computing ID here:
+    Write your name and computing ID here: ay6gv
 \end{quote}
 
 \vspace{20px}
@@ -35,7 +35,7 @@
 \vspace{20px}
 
 \begin{quote}
-    Here write the pledge that you did not share any written material electronically or differently:
+    Here write the pledge that you did not share any written material electronically or differently: I did not share any written material electronically or differently
 \end{quote}
 
 \newpage
@@ -47,7 +47,27 @@
 \end{enumerate}
 \paragraph{Answer:}
 % Add your answer for problem 1 here:
+\paragraph{}
+a
 
+It is an obstacle to augment the flow with the augmenting path found from the residual graph. Because the augmenting path may reduce the flow of an edge below the minimum flow required, so the FF algorithm does not work anymore.
+
+b
+
+We can use Linear Programming to solve this issue.
+The problem can be presented as:
+
+
+$$\begin{aligned}
+\text{maximize}\qquad&\sum_{v \in V}f_{sv} - \sum_{v \in V}f_{vs}\\
+\text{subject to}\qquad&\\
+&f_{uv} \le c(u, v) \qquad &\text{for each}\, u,v \in V\\
+&f_{uv} \ge d(u, v) \qquad &\text{for each}\, u,v \in V\\
+&\sum_{v \in V}f_{vu} = \sum_{v \in V}f_{uv} \qquad &\text{for each}\, u \in V - \{s, t\}\\
+&f_{uv} \ge 0 \qquad &\text{for each}\, u,v \in V\\
+\end{aligned}$$
+
+Then we can use simplex algorithm to solve it.
 
 \newpage
 \paragraph{Problem 2:} (Part (a) is problem 26.1-7 from CLRS)
@@ -60,10 +80,29 @@ flow network $G'=(V',E')$ without vertex capacities, such that a maximum flow in
 Part (b) Use Part (a) to design an algorithm for the following problem based on maximum flow: Find the maximum number of vertex disjoint paths from a source $s$ to a sink $t$. Explain the details of how you use maximum flow exactly (but you can use maximum flow as a black-box.).
 \paragraph{Answer:}
 % Add your answer for problem 2 here:
+\paragraph{}
 
+a
+
+Each vertex $v$ with the limit $l(v)$ in graph $G$ can be separated as 2 vertices without any vertex limits, $v'$ and $v''$, linked by a single edge $(v', v'')$ whose capacity is $l(v)$. The original incoming edges to $v$ now target $v'$ and the outgoing edges of $v$ now flow from $v''$, which means every edge $(u, v)$ now becomes $(u'', v')$. By this way, we can transform such graph $G$ into $G' = (V', E')$, where $V'$ is all these $v'$ and $v''$ together and $E'$ is the new edges $(v', v'')$ and the augmented edges $(u'', v')$.
+
+\paragraph{}
+Because each $v$ in $G$ ends with $v'$ and $v''$ in $G'$,
+$$|E'| = 2|E|$$
+\paragraph{}
+Because a new edge $(v', v'')$ is added in $G'$ for every $v$ in $G$,
+$$|V'| = |E| + |V|$$
+
+b
+
+Give every vertex in $G$ except ${s, t}$ a vertex capacity $1$. According to the method described above, transform graph $G$ into $G'$. Then find out the maximum flow in $G'$. The number of the paths from $s$ to $t$ in the max flow are the maximum number of vertex disjoint paths.
+
+\paragraph{}
+
+For every path, it passes through the vertices with vertex capacity, so its flow can only be $1$. Because a vertex has the capacity of $1$ and the flow of every path is also $1$, a vertex can only be in at most one path, which means all these paths are also disjoint. Furthermore, since every path's flow is $1$, the number of paths are the size of the flow. Therefore, finding the maximum flow is exactly same as finding the maximum number of the paths.
 
 \newpage
-\paragraph{Problem 3:} 
+\paragraph{Problem 3:}
 Let $G=(V,E)$ be a weighted directed graph with weight function $w(u,v), u,v \in V$, and let $s,t$ be two vertices of this graph. Consider the following linear program.
 \begin{itemize}
     \item Variables: For each vertex $u \in V$, $\delta_u$ is a real valued variable.
@@ -72,9 +111,86 @@ Let $G=(V,E)$ be a weighted directed graph with weight function $w(u,v), u,v \in
 \end{itemize}
 Prove that the maximum of $\delta_t$ (i.e., the optimal value) will be equal to the shortest path from $s$ to $t.$
 
+\paragraph{}
+
+Assume a random path $P_{t}$ from $s$ to $t$ passes through vertices $\{v_1, v_2, \dots, v_n\}$, so the length of $P$ is
+
+$$L(P_{t}) = w(s, v_1) + w(v_1, v_2) + \dots + w(v_n, t)$$
+
+Given the above linear programming constraints, we have
+$$\begin{aligned}
+\delta_{v_1} &\le \delta_s + w(s, v_1)\\
+\delta_{v_2} &\le \delta_{v_1} + w(v_1, v_2)\\
+&\vdots\\
+\delta_{t} &\le \delta_{v_n} + w(v_n, t)\\
+\end{aligned}$$
+
+Since $\delta_s = 0$, by sum above together, we have
+$$\begin{aligned}
+\delta_{t} &\le w(s, v_1) + w(v_1, v_2) + \dots + w(v_n, t)\\
+\delta_{t} &\le L(P_{t})
+\end{aligned}$$
+
+So the length for any path $P_{t}$ is at least as big as any feasible solution of this Linear Programing.
+
+Use $P'_{v}$ to represent the shortest path from $s$ to a vertex $v$. According to Bellman-Ford algorithm, the length of the shortest path vertices cannot be further relexed. So we have
+
+$$\L(P'_{v}) \le \L(P'_{u}) + w(u, v) \qquad \text{for each edge} (u, v) \in E$$
+
+This is exactly same as the constraints of the Linear Programming problem, which means the length of the shortest paths of the vertices also satisfy the LP, so the length of the shortest path $L(P'_t)$ as $\delta_t$ is a solution.
+
+Because all feasible solutions $\delta_t$ need to satisfy $\delta_t \le L(P'_{t})$, the shortest path $L(P'_{t})$ is the maximum solution of $\delta_t$
+
+
+
 \newpage
-\paragraph{Problem 4:} 
+\paragraph{Problem 4:}
 In class we saw the definition of an augmenting path in a residual network of a flow inside a flow network. The residual capacity of an augmenting path (as we saw and could be found in the book) is simply the minimum residual capacity of all the edges along this path (along the direction of the path -- note that there are edges going backwards as well which we ignore here). Design an algorithm of run time $O(n^2)$ (where $n$ is the number of vertices of the graph) to find a path with \emph{maximum} residual capacity. In other words, you can ignore the context here and simply solve the following problem. We are given a weighted graph that is directed, and we want to find a path $P$ from $s$ to $t$ that \emph{maximizes} the \emph{minimum} edge on the path. Hint: try to use the high level ideas of Dijkstra's algorithm.
 
+\vspace{20px}
+
+\paragraph{}
+
+The algorithm maintains a set $S$ of vertices whose final max-capacity path from the source $s$ have already been determined. The algorithm repeatedly selects the vertex $u \in V-S$ with the maximum max-capacity estimate, adds $u$ to $S$, and for all edges leaving $u$, update the target vetices' max-capacity estimate to the new incoming path's max-capacity if it is larger than the current estimate.
+
+
+\paragraph{}
+The following is the implementation
+
+\begin{verbatim}
+MAX_CAPACITY(G, w, s)
+    for each v in G.V
+        v.d = 0
+        v.pi = null
+    s.d = INFINITY
+
+    S = {}
+    Q = G.V
+
+    while Q is not empty
+        u = EXTRACT_MAX(Q)
+        S.add(u)
+
+        for each v in G.Adj[u]
+            c = MIN(u.d, w(u, v))
+            if v.d < c
+                v.d = c
+                v.pi = u
+\end{verbatim}
+
+In above implementation, the size of $Q$ is $n$ and the maximum number of $G.Adj[u]$ is also $n$, so the performance of the algorithm is $O(n^2)$.
+
+\paragraph{}
+Proof: To prove this algorithm works correctly, we only need to show when a vertex $v$ is added to $S$, $v.d$ is the max-capacify from $s$ to $v$.
+
+\paragraph{}
+Let's assume vertex $u$ is the first vertex does not have the max-capacity when added into $S$. So there must be another path $P$ from $s$ to $u$ has the max-capacity $c$. Assume vertex $x$ is the last predecessor of $u$ along this path $P$ in $S$ and $y$ is the first predecessor in $V-S$.
+
+\paragraph{}
+If current $u.d$ is not $c$ and $c$ is maximum capacity possible, so we could only have $u.d < c$. Because the capacity is decided by the edge with minimum capacity along the path, so there exist an edge in $P$ with capacity $c$. If the edge is between $s$ and $x$, then $x.d = c$. If the edge is between $x$ and $u$, then $x.d \ge c$. Anyway, we can have $x.d \ge c$. Since when $x$ is added to $S$, if $y.d < MIN(u.d, w(x, y))$, $y.d$ needs to be updated to $MIN(u.d, w(x, y))$, so $y.d \ge MIN(u.d, w(x, y))$. We know $u.d \ge c$ and $w(x, y) \ge c$, so we can claim $y.d \ge c$.
+Together, we get $y.d \ge c > u.d$. However, this contradict with $u = EXTRACT_MAX(Q)$ which means $u.d \ge y.d$.
+
+\paragraph{}
+Therefore, we conclude that $v.d$ is the max-capacify from $s$ to $v$ when $v$ is added to $S$.
 
 \end{document}
