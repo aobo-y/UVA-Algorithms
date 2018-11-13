@@ -69,6 +69,12 @@ $$\begin{aligned}
 
 Then we can use simplex algorithm to solve it.
 
+\paragraph{}
+In the Linear Programming, the objective $\sum_{v \in V}f_{sv} - \sum_{v \in V}f_{vs}$ means the difference between all the flow comes out of the source $s$ and the flow returns back into the source. So maximizing this difference is the same as maximizing the flow. Therefore, the optimal solution of this problem is the maximum flow of $G$.
+
+\paragraph{}
+The constraints respectively stands for: the flow of each edge obey the capacity, obey the minimum required flow, the incoming total of every vertex except $s$ and $t$ equals to the outgoing total, and non-negative flows.
+
 \newpage
 \paragraph{Problem 2:} (Part (a) is problem 26.1-7 from CLRS)
 
@@ -131,9 +137,10 @@ $$\begin{aligned}
 \delta_{t} &\le L(P_{t})
 \end{aligned}$$
 
-So the length for any path $P_{t}$ is at least as big as any feasible solution of this Linear Programing.
+So the length for any path $P_{t}$ is at least as big as any feasible solution of this Linear Programming.
 
-Use $P'_{v}$ to represent the shortest path from $s$ to a vertex $v$. According to Bellman-Ford algorithm, the length of the shortest path vertices cannot be further relexed. So we have
+\paragraph{}
+Use $P'_{v}$ to represent the shortest path from $s$ to a vertex $v$. According to Bellman-Ford algorithm, the length of the shortest path vertices cannot be further relaxed. So we have
 
 $$\L(P'_{v}) \le \L(P'_{u}) + w(u, v) \qquad \text{for each edge} (u, v) \in E$$
 
@@ -151,7 +158,7 @@ In class we saw the definition of an augmenting path in a residual network of a 
 
 \paragraph{}
 
-The algorithm maintains a set $S$ of vertices whose final max-capacity path from the source $s$ have already been determined. The algorithm repeatedly selects the vertex $u \in V-S$ with the maximum max-capacity estimate, adds $u$ to $S$, and for all edges leaving $u$, update the target vetices' max-capacity estimate to the new incoming path's max-capacity if it is larger than the current estimate.
+The algorithm maintains a set $S$ of vertices whose final max-capacity path from the source $s$ have already been determined. The algorithm repeatedly selects the vertex $u \in V-S$ with the maximum max-capacity estimate, adds $u$ to $S$, and for all edges leaving $u$, update the target vertices' max-capacity estimate to the new incoming path's max-capacity if it is larger than the current estimate.
 
 
 \paragraph{}
@@ -181,16 +188,16 @@ MAX_CAPACITY(G, w, s)
 In above implementation, the size of $Q$ is $n$ and the maximum number of $G.Adj[u]$ is also $n$, so the performance of the algorithm is $O(n^2)$.
 
 \paragraph{}
-Proof: To prove this algorithm works correctly, we only need to show when a vertex $v$ is added to $S$, $v.d$ is the max-capacify from $s$ to $v$.
+Proof: To prove this algorithm works correctly, we only need to show when a vertex $v$ is added to $S$, $v.d$ is the max-capacity from $s$ to $v$.
 
 \paragraph{}
 Let's assume vertex $u$ is the first vertex does not have the max-capacity when added into $S$. So there must be another path $P$ from $s$ to $u$ has the max-capacity $c$. Assume vertex $x$ is the last predecessor of $u$ along this path $P$ in $S$ and $y$ is the first predecessor in $V-S$.
 
 \paragraph{}
-If current $u.d$ is not $c$ and $c$ is maximum capacity possible, so we could only have $u.d < c$. Because the capacity is decided by the edge with minimum capacity along the path, so there exist an edge in $P$ with capacity $c$. If the edge is between $s$ and $x$, then $x.d = c$. If the edge is between $x$ and $u$, then $x.d \ge c$. Anyway, we can have $x.d \ge c$. Since when $x$ is added to $S$, if $y.d < MIN(u.d, w(x, y))$, $y.d$ needs to be updated to $MIN(u.d, w(x, y))$, so $y.d \ge MIN(u.d, w(x, y))$. We know $u.d \ge c$ and $w(x, y) \ge c$, so we can claim $y.d \ge c$.
-Together, we get $y.d \ge c > u.d$. However, this contradict with $u = EXTRACT_MAX(Q)$ which means $u.d \ge y.d$.
+Given current $u.d$ is not $c$ and $c$ is the maximum capacity possible, we could only have $u.d < c$. Because the capacity is decided by the edge with minimum capacity along the path, there must exist an edge in $P$ with capacity $c$. If the edge is between $s$ and $x$, then $x.d = c$. If the edge is between $x$ and $u$, then $x.d \ge c$. Anyway, we can have $x.d \ge c$. Since when $x$ is added to $S$, if $y.d < MIN(u.d, w(x, y))$, $y.d$ needs to be increased to $MIN(u.d, w(x, y))$, so $y.d \ge MIN(u.d, w(x, y))$. We know $u.d \ge c$ and $w(x, y) \ge c$, so the minimum of the two is also greater than or equal to $c$. Then we can claim $y.d \ge c$.
+Together, we get $y.d \ge c > u.d$. However, this contradict with $u = EXTRACT\_MAX(Q)$ which leads to $u.d \ge y.d$.
 
 \paragraph{}
-Therefore, we conclude that $v.d$ is the max-capacify from $s$ to $v$ when $v$ is added to $S$.
+Therefore, we conclude that $v.d$ is the max-capacity from $s$ to $v$ when $v$ is added to $S$.
 
 \end{document}
